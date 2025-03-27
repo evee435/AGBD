@@ -25,6 +25,22 @@ id	    name	         license_id     address_number    address_street_name	    ss
 SELECT * FROM person p JOIN interview i ON p.person_id = i.person_id 
 WHERE p.person_id = 118009
 
+SELECT * FROM film f
+INNER JOIN inventory i ON f.film_id = i.film_id
+INNER JOIN store s ON i.store_id = s.store_id 
+INNER JOIN address a ON s.address_id = a.address_id
+INNER JOIN city c ON a.city_id = c.city_id
+INNER JOIN country co ON c.country_id = co.country_id
+
+SELECT a.address, f.title, c.city,co.country FROM film f  
+INNER JOIN inventory i ON f.film_id = i.film_id
+INNER JOIN store s ON i.store_id = s.store_id 
+INNER JOIN address a ON s.address_id = a.address_id
+INNER JOIN city c ON a.city_id = c.city_id
+INNER JOIN country co ON c.country_id = co.country_id
+WHERE f.title like "ACADEMY DINOSAUR" 
+
+WHERE title like "ACADEMY DINOSAUR" AND adress = "address_id"
               
               
 
