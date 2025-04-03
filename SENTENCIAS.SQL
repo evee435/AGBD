@@ -9,3 +9,5 @@ SELECT * FROM ITEM WHERE owner IS NULL
 UPDATE item SET owner = 20 WHERE owner IS NULL
 SELECT item FROM ITEM WHERE owner = 20
 SELECT * FROM INHABITANT WHERE state ="friendly" AND job ="dealer" OR job = "merchant"  
+/*count() si queres algo especifico pones el nombre de la columna, si queres contar*/
+/*todo usas (*)*/

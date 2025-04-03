@@ -32,16 +32,45 @@ INNER JOIN address a ON s.address_id = a.address_id
 INNER JOIN city c ON a.city_id = c.city_id
 INNER JOIN country co ON c.country_id = co.country_id
 
-SELECT a.address, f.title, c.city,co.country FROM film f  
+/*ACT1*/SELECT a.address, f.title, c.city,co.country FROM film f  
 INNER JOIN inventory i ON f.film_id = i.film_id
 INNER JOIN store s ON i.store_id = s.store_id 
 INNER JOIN address a ON s.address_id = a.address_id
 INNER JOIN city c ON a.city_id = c.city_id
 INNER JOIN country co ON c.country_id = co.country_id
 WHERE f.title like "ACADEMY DINOSAUR" 
-
 WHERE title like "ACADEMY DINOSAUR" AND adress = "address_id"
-              
+
+/*ACT2*/SELECT title, c.category_id, l.language_id, rental_duration, rental_rate FROM film f
+INNER JOIN film_category fc ON  f.film_id = fc.film_id
+INNER JOIN category c ON fc.category_id = c.category_id
+INNER JOIN language l ON f.language_id = l.language_id 
+WHEN rental_duration BETWEEN 60 AND 120; /*dudoso*/
+
+/*ACT4*/SELECT f.title, min(rental.rental_date), max(rental.rental_date)
+FROM rental
+INNER JOIN inventory
+ON rental.inventory_id = inventory.inventory_id
+INNER JOIN film f
+ON inventory.film_id = f.film_id
+
+/*ACT6*/select count(*), f.rating FROM film f
+GROUP by rating
+
+/*ACT7*/select count(*), c.name FROM film f
+INNER JOIN film_category fc ON  f.film_id = fc.film_id
+INNER JOIN category c ON fc.category_id = c.category_id
+GROUP by c.category_id
+/*para facilitar la busqueda en columnas siempre con nombres*/
+
+/*ACT8*/select a.first_name,a.last_name,count(a.actor_id) as cant_actor from film f 
+inner join film_actor fa on f.film_id = fa.film_id
+INNER join actor a ON fa.actor_id = a.actor_id
+GROUP by f.film_id
+ORDER by cant_actor desc LIMIT 10;
+/*con AS se cambia el nombre de una una columna en los resultados de la consulta.*/
+
+/*ACT9*/
               
 
 
