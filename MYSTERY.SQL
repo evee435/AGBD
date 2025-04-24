@@ -70,10 +70,21 @@ GROUP by f.film_id
 ORDER by cant_actor desc LIMIT 10;
 /*con AS se cambia el nombre de una una columna en los resultados de la consulta.*/
 
-/*ACT9*/
-              
+/*ACT9*/SELECT count(film_id) as total_de_inventory, a.address, c.city, co.country FROM inventory i
+INNER JOIN store s on i.store_id = s.store_id
+INNER join address a on s.address_id = a.address_id
+INNER JOIN city c on a.city_id = c.city_id
+INNER join country co on c.country_id = co.country_id
+GROUP by s.store_id
+/*group by agrupa filas que tienen los mismos valores en columnas especificas*/
 
-
+/*ACT10*/SELECT count( DISTINCT film_id) , a.address, c.city, co.country FROM inventory i
+INNER JOIN store s on i.store_id = s.store_id
+INNER join address a on s.address_id = a.address_id
+INNER JOIN city c on a.city_id = c.city_id
+INNER join country co on c.country_id = co.country_id
+GROUP by s.store_id
+/*explicar distinct, arracar de inventory o film es lo mismo ya que inventory tiene las copias*/
 
               
               
