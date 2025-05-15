@@ -86,8 +86,29 @@ INNER join country co on c.country_id = co.country_id
 GROUP by s.store_id
 /*explicar distinct, arracar de inventory o film es lo mismo ya que inventory tiene las copias*/
 
-              
-              
+/*ACT11*/SELECT c.name as categoria, AVG(f.rental_rate) as promedio_alquler FROM film f 
+inner join film_category fc on fc.film_id = f.film_id
+inner join  category c ON fc.category_id = c.category_id
+GROUP BY c.name
+/*avg calcula el promedio de un conjunto de valores numericos en una columna especifica*/
+
+/*ACT12*/
+select f.title, r.rental_date, r.return_date, rental_rate, rental_duration ,rental_rate * rental_duration as total_xdia from film f
+inner join inventory i on i.film_id = f.film_id 
+inner join rental r on r.inventory_id = i.inventory_id
+where f.title = "ALABAMA DEVIL";     
+
+/*ACT13*/
+SELECT f.title, fc.category_id, rental_duration FROM film f
+inner join film_category fc on fc.film_id = f.film_id
+inner join category c on c.category_id = fc .category_id
+order by fc.category_id, rental_duration DESC
+
+/*ACT16*/
+SELECT a.first_name, f.title, f.length FROM film f
+inner join film_actor fa on fa.film_id = f.film_id
+inner join actor a on a.actor_id = fa.actor_id
+order by f.length DESC
 
 
 
