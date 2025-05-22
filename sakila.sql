@@ -104,15 +104,59 @@ inner join film_category fc on fc.film_id = f.film_id
 inner join category c on c.category_id = fc .category_id
 order by fc.category_id, rental_duration DESC
 
+/*ACT14*/
+SELECT title, count(fa.actor_id) as cantActores
+from film f
+INNER JOIN film_actor fa on fa.film_id = f.film_id
+WHERE title like "w%" --se busca todos los titulos que empiecen con W
+group by f.film_id 
+having cantActores > 5
+
+/*ACT15*/
+SELECT sum(amount) as totalPrecio, c.first_name, c.last_name from payment p
+INNER JOIN customer c on p.customer_id = c.customer_id
+GROUP by c.customer_id 
+
 /*ACT16*/
 SELECT a.first_name, f.title, f.length FROM film f
 inner join film_actor fa on fa.film_id = f.film_id
 inner join actor a on a.actor_id = fa.actor_id
 order by f.length DESC
 
+/*ACT17*/
+SELECT cus.last_name, c.city, co,country, ad.adress, pay.amount, re.rental_date from customer cus
+INNER JOIN address ad on cus.address_id = ad.address_id 
+INNER JOIN city c on ad.city_id = c.city_id
+inner join country co on c.country_id = co.country_id
+INNER JOIN rental re on cus.customer_id = re.customer_id 
+INNER JOIN payment pay on re.customer_id = pay.customer_id
+group by cus.last_name
+ORDER by pay.amount ASC
 
+/*ACT18*/
+insert into actor(actor_id, first_name, last_name, last_update)
+values(201, 'evelyn', 'villarreal', '2025-05-22 09:08:55');
 
-              
+/*ACT19*/
+insert into actor(actor_id, first_name, last_name, last_update)
+values(205, 'ayelen', 'quispe', '2025-05-22 09:08:55'),
+      (206, 'ariana', 'villa', '2025-05-22 09:08:55')
+
+/*ACT20 va modificar los tres datos nuevos */
+UPDATE actor 
+set first_name= 'EVELYN', last_name = 'VILLARREAL'
+WHERE actor_id = 201;
+
+UPDATE actor 
+set first_name= 'AYELEN', last_name = 'QUISPE'
+WHERE actor_id = 205;
+
+UPDATE actor 
+set first_name= 'ARIANA', last_name = 'VILLA'
+WHERE actor_id = 206;
+
+/*ACT21 borra todos los datos ingresados finalmente*/
+DELETE from actore where actor_id > 200 --borra los datos que agregamos despues del id 200       
 
 
               
