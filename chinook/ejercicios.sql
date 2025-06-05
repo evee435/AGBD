@@ -29,7 +29,12 @@ inner join artists ar on a.ArtistId = a.ArtistId
 order by Milliseconds ASC
 LIMIT 20
 --8
---FALTAAAA
+SELECT e.last_name as apellidoJefe, e.title as puesto, em.LastName as apellidoEmple, count(c.customer_id)
+as clientes_x_empleado from employees e
+inner join employees em on e.EmployeeId = em.reportsTo
+inner join customers c on em.EmployeeId = c.SupportRepId
+group by em.EmployeeId
+order by clientes_x_empleado DESC
 
 --9
 INSERT INTO tracks (name, MediaTypeId, Milliseconds, UnitPrice) 

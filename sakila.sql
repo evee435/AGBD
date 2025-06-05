@@ -54,6 +54,9 @@ ON rental.inventory_id = inventory.inventory_id
 INNER JOIN film f
 ON inventory.film_id = f.film_id
 
+/*ACT5*/
+
+
 /*ACT6*/select count(*), f.rating FROM film f
 GROUP by rating
 
