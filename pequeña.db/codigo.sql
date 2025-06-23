@@ -28,7 +28,7 @@ CREATE TABLE "clientes_pago" (
 	"id_metodo_pago" INTEGER,
 	PRIMARY KEY("id_pago" AUTOINCREMENT)
 	FOREIGN KEY ("id_cliente") REFERENCES clientes("id_cliente")
-	FOREIGN KEY ("id_metodo_pago") REFERENCES clientes("id_metodo_pago")
+	FOREIGN KEY ("id_metodo_pago") REFERENCES metodos_pagos("id_metodo_pago")
 
 );
 CREATE TABLE "metodos_pagos" (
@@ -76,14 +76,13 @@ CREATE TABLE "ventas" (
     FOREIGN KEY("id_empleado") REFERENCES empleados("id_empleado")
     FOREIGN KEY("id_compra") REFERENCES compras_clientes("id_compra")
 );
-
 CREATE TABLE "cant_productos" (
     "id_cantidad"  INTEGER NOT NULL,
     "id_producto"  INTEGER NOT NULL, --producto
     "cantidad"     NUMERIC NOT NULL,
     PRIMARY KEY("id_cantidad" AUTOINCREMENT),
-    FOREIGN KEY("id_producto") REFERENCES productos("id_producto"),
-)
+    FOREIGN KEY("id_producto") REFERENCES productos("id_producto")
+);
 
 insert into categoria (id_category, categoria)
 values('1', 'anillos'),
@@ -97,7 +96,7 @@ values('1', 'anillos'),
 
 insert into clientes ( name, apellido, genero, email)
 values( 'ayelen', 'quispe', 2, 'ayelenquispe@etec.uba.ar')
-insert into clientes_pago ( name, apellido, genero, email)
+insert into clientes ( name, apellido, genero, email)
 values( 'fernanda', 'fernandez', 0, 'ferfer22@etec.uba.ar')
 insert into clientes ( name, apellido, genero, email)
 values( 'thiago', 'decena', 1, 'thiago77@etec.uba.ar')
@@ -113,6 +112,7 @@ insert into clientes ( name, apellido, genero, email)
 values( 'pedro', 'martinez', 1, 'pedrimar@etec.uba.ar')
 insert into clientes ( name, apellido, genero, email)
 values( 'rocio', 'albarracin', 2, 'ralbarracintrab@etec.uba.ar')
+
 insert into categoria (categoria)
 values('carteras'),
 ('uñas'),
@@ -121,10 +121,16 @@ values('carteras'),
 ('gorras'),
 ('lentes'),
 ('reloj')
-insert into categoria ( categoria)
-values('anillos'),
+('anillos'),
 ('collares'),
 ('pulseras'),
 ('broches'),
 ('vinchas'),
 ('scrunchies')
+
+insert into metodos_pagos (name)
+values("Efectivo"),("mercado pago"),("Tarjeta debito"),("Tarjeta credito"),("Transferencia")
+
+select c.name, apellido, mp.name as metodoDePago from clientes c
+inner join clientes_pago cp on c.id_cliente = cp.id_cliente
+inner join metodos_pagos mp on cp.id_metodo_pago = mp.id_metodo_pago
