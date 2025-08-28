@@ -4,3 +4,4 @@
 (tipos de datos que se diferencian)
 
 --ademas empezamos a conectar la base de datos a flask
+--tomi nos va borrar la tabla cant_producto y nosotras tenemos que explicarle a fede como lo hicimos
