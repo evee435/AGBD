@@ -4,7 +4,7 @@ Rocio Albarracin <ralbarracintrab@gmail.com>	21 de agosto de 2025, 8:50 a.m.
 Para: evelyn.villarreal245@gmail.com
 ------------------------------------COMENZAMOS DE NUEVO
 --Primero creamos tablas
-BEGIN TRANSACTION;
+begin TRANSACTION;
 CREATE TABLE IF NOT EXISTS "categoria" (
  "id_category" INTEGER,
  "categoria" varchar(30) NOT NULL UNIQUE,
@@ -39,18 +39,7 @@ CREATE TABLE IF NOT EXISTS "cant_productos" (
  PRIMARY KEY("id_cantidad" AUTOINCREMENT),
  FOREIGN KEY("id_producto") REFERENCES "productos"("id_producto")
 );
-CREATE TABLE IF NOT EXISTS "tickets" (
-    "id_ticket" INTEGER NOT NULL,
-    "id_cliente" INTEGER NOT NULL,
-    "id_producto" INTEGER NOT NULL,
-    "id_cantidad" INTEGER NOT NULL,
-    "id_tienda" INTEGER NOT NULL,
-    PRIMARY KEY ("id_ticket" AUTOINCREMENT),
-    FOREIGN KEY ("id_cliente") REFERENCES "clientes"("id_cliente") 
-    FOREIGN KEY ("id_producto") REFERENCES "productos"("id_producto")
-    FOREIGN KEY ("id_cantidad") REFERENCES "cant_productos"("id_cantidad")
-    FOREIGN KEY ("id_tienda") REFERENCES "tiendas"("id_tienda")
-)
+
 CREATE TABLE IF NOT EXISTS "metodos_pagos" (
  "id_metodo_pago" INTEGER,
  "name" varchar(30) NOT NULL UNIQUE,
@@ -97,6 +86,18 @@ CREATE TABLE IF NOT EXISTS "registro_ventas" (
  PRIMARY KEY("id_venta" AUTOINCREMENT),
  FOREIGN KEY("id_pago") REFERENCES "clientes_pago"("id_pago"),
  FOREIGN KEY("id_cantidad") REFERENCES "cant_productos"("id_cantidad")
+);
+CREATE TABLE IF NOT EXISTS "tickets" (
+    "id_ticket" INTEGER NOT NULL,
+    "id_cliente" INTEGER NOT NULL,
+    "id_producto" INTEGER NOT NULL,
+    "id_cantidad" INTEGER NOT NULL,
+    "id_tienda" INTEGER NOT NULL,
+    PRIMARY KEY ("id_ticket" AUTOINCREMENT),
+    FOREIGN KEY ("id_cliente") REFERENCES "clientes"("id_cliente") 
+    FOREIGN KEY ("id_producto") REFERENCES "productos"("id_producto")
+    FOREIGN KEY ("id_cantidad") REFERENCES "cant_productos"("id_cantidad")
+    FOREIGN KEY ("id_tienda") REFERENCES "tiendas"("id_tienda")
 );
 
 -- Insertamos (primero) en tablas independientes
@@ -179,8 +180,12 @@ INSERT INTO "registro_ventas" ("id_venta","dia","mes","anio","id_pago","costo_to
 INSERT INTO "registro_ventas" ("id_venta","dia","mes","anio","id_pago","costo_total","id_empleado","id_cantidad") VALUES (6,26,6,2025,3,6000,3,2);
 INSERT INTO "registro_ventas" ("id_venta","dia","mes","anio","id_pago","costo_total","id_empleado","id_cantidad") VALUES (7,26,6,2025,4,3000,1,1);
 
+INSERT INTO "tickets" ("id_cliente","id_producto","id_cantidad","id_tienda","costo_total") VALUES (1,4,3,1,9000);
+INSERT INTO "tickets" ("id_cliente","id_producto","id_cantidad","id_tienda","costo_total") VALUES (9,4,2,2,6000);
+INSERT INTO "tickets" ("id_cliente","id_producto","id_cantidad","id_tienda","costo_total") VALUES (5,4,3,1,9000);
+INSERT INTO "tickets" ("id_cliente","id_producto","id_cantidad","id_tienda","costo_total") VALUES (7,1,3,1,3000);
 COMMIT;
 
 
 --falta que rocio me pase los datos de la tabla ticket, INSERT
--- hoy 21/08 agregamos una tabla de ticket que es para los clientes, cmabiamos el nombre de ventas a registro_ventas
+

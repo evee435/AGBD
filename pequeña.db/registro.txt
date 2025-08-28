@@ -1,0 +1,6 @@
+-- hoy 21/08 agregamos una tabla de ticket que es informacion para los clientes, cambiamos el nombre de ventas a registro_ventas tabla que contiene una evaluacion estadictica sonbre las ventas. Tambien sacamos la colummna de id_producto ya que dentro solo van las cantidades, luego esta se une con la tabla producto para mostrar info junta en ticket.
+
+--hoy 28/08 busque informacion para poder pasar mi codigo de sqlite a mysql, modifique los INTEGER, AUTOINCREMET = cambio de lenguaje 
+(tipos de datos que se diferencian)
+
+--ademas empezamos a conectar la base de datos a flask
