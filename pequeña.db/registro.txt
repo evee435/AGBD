@@ -1,7 +1,25 @@
 -- hoy 21/08 agregamos una tabla de ticket que es informacion para los clientes, cambiamos el nombre de ventas a registro_ventas tabla que contiene una evaluacion estadictica sonbre las ventas. Tambien sacamos la colummna de id_producto ya que dentro solo van las cantidades, luego esta se une con la tabla producto para mostrar info junta en ticket.
 
+------------------------------------------
+
 --hoy 28/08 busque informacion para poder pasar mi codigo de sqlite a mysql, modifique los INTEGER, AUTOINCREMET = cambio de lenguaje 
 (tipos de datos que se diferencian)
-
+pasamos todos los datos a php y quedamos en modificar la tabla cant_producto 
 --ademas empezamos a conectar la base de datos a flask
+
+------------------------------------------
 --tomi nos va borrar la tabla cant_producto y nosotras tenemos que explicarle a fede como lo hicimos
+------------------------------------------
+
+--hoy 4/09 eliminamos las referencias de FOREING KEY para poder borrar la tabla cant_producto, luego volvios a crear la tabla y no agregamos id_producto y aplicamos una FOREING KEY en una tabla creada.
+ALTER TABLE 'registro_ventas' 
+ADD INDEX('id_cantidad');  modifica y agrega el indice
+ademas buscamos informacion para poder incluir la bblioteca de mysql a el entorno virtual ya creado
+------------------------------------------
+
+antes de borrar la tabla si o si debemos eliminar antes las referencias que hallan en otras.
+--cuantas mas tablas esten relacionadas con la tabla que quieras borrar, mas comandos ALTER TABLE necesitaras para quitar ess relaciones
+
+1 - ALTER TABLE tickets DROP FOREING KEY 
+2 - ALTER TABLE registro_ventas DROP FOREING KEY 
+3 - DROP TABLE cant_producto

@@ -1,5 +1,3 @@
-START TRANSACTION;
-
 CREATE TABLE IF NOT EXISTS categoria (
     id_category INT AUTO_INCREMENT,
     categoria VARCHAR(30) NOT NULL UNIQUE,
@@ -22,12 +20,10 @@ CREATE TABLE IF NOT EXISTS tiendas (
     PRIMARY KEY(id_tienda)
 );
 
-CREATE TABLE IF NOT EXISTS cant_productos (
-    id_cantidad INT AUTO_INCREMENT,
-    id_producto INT NOT NULL,
-    cantidad DECIMAL(10,2) NOT NULL,
-    PRIMARY KEY(id_cantidad),
-    FOREIGN KEY(id_producto) REFERENCES productos(id_producto)
+CREATE TABLE IF NOT EXISTS `cant_productos` (
+    `id_cantidad` INTEGER NOT NULL AUTO_INCREMENT,
+    `cantidad` DECIMAL NOT NULL,
+    PRIMARY KEY(`id_cantidad`)
 );
 
 CREATE TABLE IF NOT EXISTS registro_productos (
@@ -83,10 +79,12 @@ CREATE TABLE IF NOT EXISTS registro_ventas (
     id_pago INT NOT NULL,
     costo_total DECIMAL(10,2) NOT NULL,
     id_empleado INT NOT NULL,
-    id_cantidad INT,
+    id_cantidad INT NOT NULL,
+    id_producto INT NOT NULL,
     FOREIGN KEY(id_empleado) REFERENCES empleados(id_empleado),
     FOREIGN KEY(id_pago) REFERENCES clientes_pago(id_pago),
     FOREIGN KEY(id_cantidad) REFERENCES cant_productos(id_cantidad),
+    FOREIGN KEY(id_producto) REFERENCES productos(id_productos),
     PRIMARY KEY(id_venta)
 );
 
@@ -168,20 +166,21 @@ INSERT INTO `registro_productos` (`id_producto`, `id_tienda`) VALUES (5, 2);
 INSERT INTO `registro_productos` (`id_producto`, `id_tienda`) VALUES (8, 1);
 INSERT INTO `registro_productos` (`id_producto`, `id_tienda`) VALUES (6, 1);
 
-INSERT INTO `cant_productos` (`id_producto`, `cantidad`) VALUES (4, 2);
-INSERT INTO `cant_productos` (`id_producto`, `cantidad`) VALUES (4, 2);
-INSERT INTO `cant_productos` (`id_producto`, `cantidad`) VALUES (4, 3);
-INSERT INTO `cant_productos` (`id_producto`, `cantidad`) VALUES (1, 2);
+INSERT INTO `cant_productos` (`cantidad`) VALUES (2);
+INSERT INTO `cant_productos` (`cantidad`) VALUES (2);
+INSERT INTO `cant_productos` (`cantidad`) VALUES (3);
+INSERT INTO `cant_productos` (`cantidad`) VALUES (2);
 
 INSERT INTO `clientes_pago` (`id_cliente`, `id_metodo_pago`) VALUES (1, 5);
 INSERT INTO `clientes_pago` (`id_cliente`, `id_metodo_pago`) VALUES (9, 3);
 INSERT INTO `clientes_pago` (`id_cliente`, `id_metodo_pago`) VALUES (5, 1);
 INSERT INTO `clientes_pago` (`id_cliente`, `id_metodo_pago`) VALUES (7, 3);
 
-INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`) VALUES (26, 6, 2025, 1, 6000, 3, 4);
-INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`) VALUES (26, 6, 2025, 2, 9000, 2, 3);
-INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`) VALUES (26, 6, 2025, 3, 6000, 3, 2);
-INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`) VALUES (26, 6, 2025, 4, 3000, 1, 1);
+--AGREGAR LOS ID PRODUCTOS FALTANTES VIENDO LO REGISTRADO EN PHPADMIN
+INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`,`id_producto`) VALUES (26, 6, 2025, 1, 6000, 3, 4, 4);
+INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`,`id_producto`) VALUES (26, 6, 2025, 2, 9000, 2, 3, 4);
+INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`,`id_producto`) VALUES (26, 6, 2025, 3, 6000, 3, 2, 4);
+INSERT INTO `registro_ventas` (`dia`, `mes`, `anio`, `id_pago`, `costo_total`, `id_empleado`, `id_cantidad`, `id_producto`) VALUES (26, 6, 2025, 4, 3000, 1, 1, 1);
 
 INSERT INTO `tickets` (`id_cliente`, `id_producto`, `id_cantidad`, `id_tienda`, `costo_total`) VALUES (1, 4, 3, 1, 9000);
 INSERT INTO `tickets` (`id_cliente`, `id_producto`, `id_cantidad`, `id_tienda`, `costo_total`) VALUES (9, 4, 2, 2, 6000);

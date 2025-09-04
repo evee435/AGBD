@@ -1,36 +1,37 @@
-from flask import Flask, url_for , render_template
+from flask import Flask, jsonify 
+import mysql.connector
 import sqlite3 #importa el lenguaje flask
-app = Flask(__name__) 
 db=None
 
-#-------------CONEXION A BASA DE DATOS-----------------
+app = Flask(__name__)
 
-def abrirConexion(): #abre conexion
-    db = sqlite3.connect('accesorios.db')  #nombre de la db
-    db.row_factory = sqlite3.Row #esto permite acceder a las filas como diccionarios
-    return db
+# Configuración de la base de datos
+app.config['MYSQL_HOST'] = 'localhost'  # O la IP de tu servidor de base de datos
+app.config['MYSQL_USER'] = 'accesorio'  # Tu usuario de MySQL
+app.config['MYSQL_PASSWORD'] = 'accesorio1234'  # Tu contraseña de MySQL
+app.config['MYSQL_DB'] = 'accesorios'  # El nombre de la base de datos que quieres usar
+app.config['MYSQL_PORT'] = 3306  # el puerto (por defecto 3306)
 
-def cerrarConexion(db): #funcion para cerrar
-    db.close()
+# Establecer la conexión en una ruta
+@app.route('/usuarios', methods=['GET'])
+def obtener_usuarios():
+    # Establecer la conexión a MySQL con el puerto
+    conn = mysql.connector.connect(
+        host=app.config['MYSQL_HOST'],
+        user=app.config['MYSQL_USER'],
+        password=app.config['MYSQL_PASSWORD'],
+        database=app.config['MYSQL_DB'],
+        port=app.config['MYSQL_PORT']  # Aquí se incluye el puerto
+    )
+    cursor = conn.cursor(dictionary=True)
 
+    # Consultar la base de datos
+    cursor.execute("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()
 
-#10 tablas 
+    # Cerrar la conexión
+    cursor.close()
+    conn.close()
 
-#-----------INSERTAR DATOS-------------------
-@app.route('/insertar/<string:categoria>')
-def insertar(categoria):
-    db = abrirConexion()  # Abrir la conexión
-    cursor = db.cursor()
-
-    # Insertar los datos de usuario y correo en la tabla
-    cursor.execute("""INSERT INTO categoria (categoria) VALUES (?)""", (categoria))
-    db.commit()  # Guardar los cambios en la base de datos
-
-#creo otro ruta con def que muestre todo (usuarios)
-
-
-#que funcion tiene los signos de pregunta
-#si quiero insertar los datos de cliente tengo que ingresar todas las filas
-#hago lo mismo con todas
-#en la ruta es opc o tengo que especificar 
-#si la tabla tiene id, en la ruta se deberia poner int:id
+    # Retornar los resultados como JSON
+    return jsonify(usuarios)
